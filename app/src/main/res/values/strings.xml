@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Room</string>
+    <string name="add">add</string>
+    <string name="name">Заголовок</string>
+    <string name="opisanie">Описание</string>
+    <string name="save">Сохранить</string>
+</resources>
