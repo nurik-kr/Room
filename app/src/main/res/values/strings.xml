@@ -4,4 +4,5 @@
     <string name="name">Заголовок</string>
     <string name="opisanie">Описание</string>
     <string name="save">Сохранить</string>
+    <string name="delete">DELETE</string>
 </resources>

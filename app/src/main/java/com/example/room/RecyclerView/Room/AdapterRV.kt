@@ -8,15 +8,22 @@ import com.example.room.R
 import com.example.room.data.ETdata
 import kotlinx.android.synthetic.main.item_grid.view.*
 
-class AdapterRV : RecyclerView.Adapter<AdapterRV.RvViewHolder>() {
+class AdapterRV(private var list : ItemRVlist) : RecyclerView.Adapter<AdapterRV.RvViewHolder>() {
 
     private var data = arrayListOf<ETdata>()
 
     class RvViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(data: ETdata) {
+        fun bind(
+            data: ETdata,
+            list: ItemRVlist
+        ) {
             itemView.tv1.text = data.et_name
             itemView.tv2.text = data.et_opisanie
+
+            itemView.btn_delete.setOnClickListener {
+                list.btnDeleteClicked(data)
+            }
         }
     }
 
@@ -34,6 +41,6 @@ class AdapterRV : RecyclerView.Adapter<AdapterRV.RvViewHolder>() {
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: RvViewHolder, position: Int) {
-        holder.bind(data[position])
+        holder.bind(data[position],list)
     }
 }

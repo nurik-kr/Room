@@ -10,26 +10,31 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.room.MyApp
 import com.example.room.R
 import com.example.room.RecyclerView.Room.AdapterRV
+import com.example.room.RecyclerView.Room.ItemRVlist
 import com.example.room.data.Database
+import com.example.room.data.ETdata
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ItemRVlist {
 
-    val adapter = AdapterRV()
     private var db: Database? = null
+    var adapter: AdapterRV? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        db = MyApp.app?.getDB()
         setupRecyclerView()
-        db  = MyApp.app?.getDB()
     }
 
     private fun setupRecyclerView() {
+        val manager = GridLayoutManager(applicationContext, 2)
+        RecyclerView.layoutManager = manager
+        adapter = AdapterRV(this)
         RecyclerView.adapter = adapter
-        val  data = db?.getEtDao()?.getAllEtData()
+        val data = db?.getEtDao()?.getAllEtData()
         if (data != null) {
-            adapter.update(data)
+            adapter?.update(data)
         }
     }
 
@@ -44,5 +49,12 @@ class MainActivity : AppCompatActivity() {
             R.id.add -> startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun btnDeleteClicked(data: ETdata) {
+        db?.getEtDao()?.delete(data)
+        val newData = db?.getEtDao()?.getAllEtData()
+        if (newData!=null)
+            adapter?.update(newData)
     }
 }
